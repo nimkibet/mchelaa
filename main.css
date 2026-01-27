@@ -1,0 +1,301 @@
+@import url('https://fonts.googleapis.com/css2?family=Amita:wght@400;700&family=Archivo:ital,wght@0,100..900;1,100..900&family=Bilbo+Swash+Caps&family=Inter:opsz,wght@14..32,500&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Pacifico&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tiro+Devanagari+Marathi:ital@0;1&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+  html,
+  body {
+    height: 100%;
+    /* for touch screen */
+    touch-action: none; 
+  }
+  
+  body {
+    perspective: 1000px; /* Essential for the tunnel depth */
+      overflow: hidden;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    font-family: "Pacifico", sans-serif;
+    background: #ffffff;
+    -webkit-perspective: 1000px;
+            perspective: 1000px;
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+  }
+  
+  #drag-container, #spin-container {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin: auto;
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+    -webkit-transform: rotateX(-10deg);
+            transform: rotateX(-10deg);
+            z-index: 100;
+  }
+  
+  #drag-container img, #drag-container video {
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+    position: absolute;
+    left: 0;
+    top: 0;
+    max-width: 120%;
+    max-height: 120%; 
+    line-height: 200px;
+    font-size: 50px;
+    text-align: center;
+    -webkit-box-shadow: 0 0 8px #fff;
+            box-shadow: 0 0 8px #fff;
+    -webkit-box-reflect: below 10px linear-gradient(transparent, transparent, #0005);
+  }
+  
+  #drag-container img:hover, #drag-container video:hover {
+    -webkit-box-shadow: 0 0 15px #fffd;
+            box-shadow: 0 0 15px #fffd;
+    -webkit-box-reflect: below 10px linear-gradient(transparent, transparent, #0007);
+  }
+  
+  #drag-container p {
+    
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%) rotateX(90deg);
+            transform: translate(-50%,-50%) rotateX(90deg);
+    color: rgb(0, 195, 255);
+    animation: fadein ease 15s;
+  }
+
+  @keyframes fadein {
+      from {
+          opacity:0;
+          
+      }
+      to {
+          opacity: 1;
+          
+      }
+  }
+  
+  #ground {
+    width: 900px;
+    height: 900px;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%) rotateX(90deg);
+            transform: translate(-50%,-50%) rotateX(90deg);
+    background: -webkit-radial-gradient(center center, farthest-side , #9993, transparent);
+  }
+  
+  #music-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+  }
+  
+  @-webkit-keyframes spin {
+    from{
+      -webkit-transform: rotateY(0deg);
+              transform: rotateY(0deg);
+    } to{
+      -webkit-transform: rotateY(360deg);
+              transform: rotateY(360deg);
+    }
+  }
+  
+  @keyframes spin {
+    from{
+      -webkit-transform: rotateY(0deg);
+              transform: rotateY(0deg);
+    } to{
+      -webkit-transform: rotateY(360deg);
+              transform: rotateY(360deg);
+    }
+  }
+  @-webkit-keyframes spinRevert {
+    from{
+      -webkit-transform: rotateY(360deg);
+              transform: rotateY(360deg);
+    } to{
+      -webkit-transform: rotateY(0deg);
+              transform: rotateY(0deg);
+    }
+  }
+  @keyframes spinRevert {
+    from{
+      -webkit-transform: rotateY(360deg);
+              transform: rotateY(360deg);
+    } to{
+      -webkit-transform: rotateY(0deg);
+              transform: rotateY(0deg);
+    }
+  }
+
+  #canvas {
+    background-color:transparent;   
+    color: transparent; 
+    margin: 0;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    width: 100vw;
+  }
+
+
+#canva {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    overflow: hidden;
+}
+
+p {
+    font-weight: 600;
+    font-size: 4vw;
+    text-align: center;
+    
+}
+
+@media screen and (max-width: 658px)    {
+  p {
+    font-weight: 600;
+    font-size: 12vw;
+    text-align: center;
+}
+
+}
+/* Add to main.css */
+#webgl-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Behind everything */
+}
+
+#canvas {
+    position: fixed; /* Fireworks canvas */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999; /* On top of everything (transparent background) */
+    pointer-events: none; /* Let clicks pass through to the 3D spinner */
+}
+/* main.css */
+
+/* 1. Pink Background for the Homepage */
+#welcome-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* A rich, classic pink gradient */
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 1s ease-out;
+}
+
+/* 2. Visible & Classic Button Design */
+#surprise-btn {
+    /* Typography */
+    font-family: 'Playfair Display', serif; /* Classic Serif Font */
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    
+    /* Shape & Size */
+    padding: 18px 50px;
+    border-radius: 50px; /* Elegant pill shape */
+    
+    /* Colors (Classic High Contrast) */
+    color: #c2185b; /* Deep Rose color */
+    background-color: #ffffff; /* Pure white for visibility */
+    border: 2px solid #ffffff;
+    
+    /* Interaction & Depth */
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(194, 24, 91, 0.2); /* Soft shadow for depth */
+    transition: all 0.3s ease;
+    margin-top: 30px;
+}
+
+/* Button Hover Effect */
+#surprise-btn:hover {
+    background-color: #c2185b; /* Invert to Deep Rose */
+    color: #ffffff; /* White text */
+    transform: translateY(-3px); /* Lifts up slightly */
+    box-shadow: 0 15px 30px rgba(194, 24, 91, 0.4);
+}
+
+/* Ensure the 'You are loved' text is visible on the new pink background */
+#loved-text {
+    color: #c2185b; /* Deep Rose to match button */
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    text-shadow: none; /* Clean look */
+    /* ... keep your existing positioning/display styles ... */
+}
+
+@keyframes lovedAnimation {
+    0% { transform: scale(0.5); opacity: 0; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 0; }
+}
+/* main.css additions */
+
+/* Responsive adjustment for the Welcome Page */
+@media screen and (max-width: 658px) {
+    #surprise-btn {
+        font-size: 18px; /* Smaller button text for mobile */
+        padding: 12px 24px;
+    }
+
+    #loved-text {
+        font-size: 32px; /* Smaller "You are loved" text */
+        width: 80%;
+        text-align: center;
+    }
+}
+
+/* Ensure the 3D containers take up the full mobile viewport */
+#drag-container, #spin-container {
+    touch-action: none; /* Prevents page scrolling while interacting with the gallery */
+}
+/* Add to main.css */
+#nimrod-text {
+    position: fixed;
+    bottom: 30px; /* Positioned at the bottom center */
+    left: 50%;
+    transform: translateX(-50%);
+    
+    font-family: 'Playfair Display', serif; /* Matching your classic font */
+    font-size: 24px;
+    letter-spacing: 3px;
+    color: #fff;
+    
+    /* Default Neon Glow */
+    text-shadow: 
+        0 0 5px #fff,
+        0 0 10px #ff00de,
+        0 0 20px #ff00de,
+        0 0 40px #ff00de;
+        
+    z-index: 100; /* Ensure it stays on top */
+    pointer-events: none; /* Let clicks pass through */
+    transition: transform 0.1s ease-out; /* Smooth pulse movement */
+}
